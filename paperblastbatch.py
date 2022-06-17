@@ -8,6 +8,26 @@ import os
 from bs4 import BeautifulSoup as bs
 
 
+class MyHTMLParser(HTMLParser):
+   #Initializing lists
+   lsStartTags = list()
+   lsEndTags = list()
+   lsStartEndTags = list()
+   lsComments = list()
+
+   #HTML Parser Methods
+   def handle_starttag(self, startTag, attrs):
+       self.lsStartTags.append(startTag)
+
+   def handle_endtag(self, endTag):
+       self.lsEndTags.append(endTag)
+
+   def handle_startendtag(self,startendTag, attrs):
+       self.lsStartEndTags.append(startendTag)
+
+   def handle_comment(self,data):
+       self.lsComments.append(data)
+
 #creating an object of the overridden class
 parser = MyHTMLParser()
 parser.feed(str(data))
@@ -16,7 +36,7 @@ print(parser.lsEndTags)
 
 
 soup = bs(data) 
-
+soup.findAll('p')[2]
 
 with open('/home/tslaird/leveau_lab/PaperBlastBatch/iac_proteins.fasta','r') as file:
     all_proteins=file.read()
@@ -38,8 +58,8 @@ for protein in protein_list:
     with urllib.request.urlopen(path) as response, open(name, 'wb') as out_file:
         data = response.read() # a `bytes` object
         out_file.write(data)
-    x=parser.feed(data))
-    if re.findall('similar proteins')
+    soup = bs(data) 
+    count= str(soup.findAll('p')[2]
     result_list.append([name,protein,'=HYPERLINK("'+'file://' +working_dir+'/'+name+'.html'+'")','=HYPERLINK("'+path+'")', ] )
     
     
